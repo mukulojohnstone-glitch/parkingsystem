@@ -25,7 +25,12 @@ py app.py
 - **Vehicle exit:** Look up the plate, review the fee, choose M-Pesa, card, or cash, then confirm the simulated payment. The bay is released only when the transaction is recorded.
 - **Admin & reports:** Change the amounts for each time band and review completed transactions.
 
-Default rates: up to 30 minutes is free; up to 2 hours is Kshs. 50; up to 4 hours is Kshs. 100; up to 6 hours is Kshs. 300; over 6 hours is Kshs. 500. Rate amounts are stored in SQLite and are editable on the admin page.
+Default rates: up to 30 minutes is free; 
+                up to 2 hours is Kshs. 50; 
+                up to 4 hours is Kshs. 100; 
+                up to 6 hours is Kshs. 300; 
+                over 6 hours is Kshs. 500. 
+                Rate amounts are stored in SQLite and are editable on the admin page.
 
 ## Data structure and storage
 
