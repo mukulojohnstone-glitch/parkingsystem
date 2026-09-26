@@ -18,8 +18,6 @@ py -m pip install -r requirements.txt
 py app.py
 ```
 
-Open <http://127.0.0.1:5000>. The SQLite database `parking.db` is created automatically the first time the app starts.
-
 ## Using the system
 
 - **Slots:** View all bays; the grid refreshes automatically.
