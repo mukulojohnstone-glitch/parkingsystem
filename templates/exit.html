@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Vehicle exit{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">DEPARTURE & PAYMENT</p>
+    <h1>Process vehicle exit</h1>
+    <p class="subheading">Look up the parked vehicle to calculate its fee.</p>
+  </div>
+</section>
+
+<section class="form-panel">
+  <form method="post" action="{{ url_for('exit_lookup') }}" class="lookup-form">
+    <label for="plate">Vehicle number plate</label>
+    <div class="inline-form">
+      <input
+        id="plate"
+        name="plate"
+        type="text"
+        placeholder="e.g. KDA 123A"
+        maxlength="20"
+        value="{{ vehicle.plate if vehicle else '' }}"
+        required
+      >
+      <button class="button secondary" type="submit">Calculate fee</button>
+    </div>
+  </form>
+
+  {% if vehicle %}
+  <div class="fee-summary">
+    <div>
+      <span class="eyebrow">BAY {{ '%02d'|format(vehicle.slot_number) }}</span>
+      <h2>{{ vehicle.plate }}</h2>
+      <p>Parked for <strong>{{ elapsed|duration }}</strong></p>
+    </div>
+    <div class="fee-amount">
+      <span>Amount due</span>
+      <strong>Kshs. {{ fee }}</strong>
+    </div>
+  </div>
+
+  <form method="post" action="{{ url_for('exit_confirm') }}" class="payment-form">
+    <input type="hidden" name="plate" value="{{ vehicle.plate }}">
+    <label for="payment_method">Payment method</label>
+    <select id="payment_method" name="payment_method" required>
+      <option value="M-Pesa">M-Pesa</option>
+      <option value="Card">Card</option>
+      <option value="Cash">Cash</option>
+    </select>
+    <button class="button primary" type="submit">Confirm payment & open barrier</button>
+    <p class="form-hint">The bay is released after you confirm the simulated payment.</p>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}

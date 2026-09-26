@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Admin & reports{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">ADMINISTRATION</p>
+    <h1>Rates & transaction log</h1>
+    <p class="subheading">Configure fee amounts and review completed payments.</p>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <h2>Parking rates</h2>
+      <p>Fee thresholds are fixed; amounts can be changed below.</p>
+    </div>
+  </div>
+
+  <form method="post" class="rates-form">
+    {% for rate in rates %}
+      <label class="rate-row" for="{{ rate.key }}">
+        <span>{{ rate.label }}</span>
+        <span class="rate-input">
+          <span>Kshs.</span>
+          <input id="{{ rate.key }}" name="{{ rate.key }}" type="number" min="0" step="1" value="{{ rate.amount }}" required>
+        </span>
+      </label>
+    {% endfor %}
+    <button class="button primary" type="submit">Save rates</button>
+  </form>
+</section>
+
+<section class="admin-section">
+  <div class="section-heading">
+    <div>
+      <h2>Completed transactions</h2>
+      <p>{{ transactions|length }} recorded payment{{ '' if transactions|length == 1 else 's' }}</p>
+    </div>
+  </div>
+
+  {% if transactions %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Plate</th>
+            <th>Entry</th>
+            <th>Exit</th>
+            <th>Duration</th>
+            <th>Amount</th>
+            <th>Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+            <tr>
+              <td class="plate-cell">{{ transaction.plate }}</td>
+              <td>{{ transaction.entry_time|replace('T', ' ') }}</td>
+              <td>{{ transaction.exit_time|replace('T', ' ') }}</td>
+              <td>{{ transaction.duration_seconds|duration }}</td>
+              <td>Kshs. {{ transaction.amount }}</td>
+              <td>{{ transaction.payment_method }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="empty-state">Completed transactions will appear here.</p>
+  {% endif %}
+</section>
+{% endblock %}

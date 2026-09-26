@@ -1,0 +1,578 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+/* The colours are kept here so the look of the whole site is easy to change. */
+:root {
+  color-scheme: light;
+  --ink: #17221d;
+  --muted: #68766f;
+  --line: #dde5df;
+  --paper: #f5f7f4;
+  --white: #ffffff;
+  --green: #146c4a;
+  --green-dark: #10563b;
+  --green-pale: #e2f3e9;
+  --red: #a4493c;
+  --red-pale: #f8e9e6;
+  --input-line: #ccd7cf;
+}
+
+/* Basic page styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(120deg, #f5f7f4 0%, #eff4ef 55%, #f7f5ed 100%);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font: 800 30px/1.2 'Manrope', sans-serif;
+}
+
+/* Header and navigation */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 72px;
+  padding: 0 max(5vw, 24px);
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font: 800 16px 'Manrope', sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background: var(--green);
+  color: white;
+}
+
+.brand small {
+  margin-left: 2px;
+  padding-left: 10px;
+  border-left: 1px solid var(--line);
+  color: var(--muted);
+  font: 700 10px 'DM Sans', sans-serif;
+  letter-spacing: 1px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2.5vw, 32px);
+}
+
+nav a {
+  color: #526057;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--green);
+}
+
+/* Shared content layout */
+.page {
+  width: min(1060px, calc(100% - 48px));
+  min-height: calc(100vh - 122px);
+  margin: 0 auto;
+  padding: 48px 0 72px;
+}
+
+.page-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  display: block;
+  margin: 0 0 9px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.subheading {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+footer {
+  padding: 18px 24px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Buttons */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 17px;
+  border: 0;
+  border-radius: 4px;
+  font: 700 13px 'DM Sans', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.primary {
+  background: var(--green);
+  color: white;
+}
+
+.primary:hover {
+  background: var(--green-dark);
+}
+
+.secondary {
+  background: #e9eee9;
+  color: var(--ink);
+}
+
+.secondary:hover {
+  background: #dce5dd;
+}
+
+/* Slot availability */
+.availability {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 105px;
+  margin-bottom: 20px;
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--white);
+}
+
+.availability-count strong {
+  display: block;
+  font: 800 32px 'Manrope', sans-serif;
+}
+
+.legend {
+  display: flex;
+  gap: 22px;
+  color: #526057;
+  font-size: 12px;
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dot {
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.free-dot {
+  background: var(--green);
+}
+
+.occupied-dot {
+  background: var(--red);
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 112px;
+  padding: 15px 18px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.slot.is-free {
+  border-color: #c6e3d0;
+  background: var(--green-pale);
+}
+
+.slot.is-occupied {
+  border-color: #ecd3ce;
+  background: var(--red-pale);
+}
+
+.slot-label {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.slot strong {
+  margin: 3px 0;
+  font: 800 25px 'Manrope', sans-serif;
+}
+
+.slot-status {
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.is-occupied .slot-status {
+  color: var(--red);
+}
+
+.update-note {
+  margin: 15px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: right;
+}
+
+/* Forms and payment summary */
+.form-panel {
+  width: min(100%, 650px);
+  padding: 27px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--white);
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #37453d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 43px;
+  padding: 10px 12px;
+  border: 1px solid var(--input-line);
+  border-radius: 4px;
+  background: white;
+  color: var(--ink);
+  font: 14px 'DM Sans', sans-serif;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #a9d4b9;
+  border-color: var(--green);
+}
+
+.form-panel form > .button {
+  margin-top: 18px;
+}
+
+.inline-form {
+  display: flex;
+  gap: 10px;
+}
+
+.inline-form input {
+  flex: 1;
+  min-width: 0;
+}
+
+.lookup-form > label {
+  margin-top: 0;
+}
+
+.fee-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 25px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.fee-summary h2 {
+  margin: 0 0 5px;
+  font: 700 20px 'Manrope', sans-serif;
+}
+
+.fee-summary p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.fee-amount {
+  text-align: right;
+}
+
+.fee-amount span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.fee-amount strong {
+  font: 800 23px 'Manrope', sans-serif;
+}
+
+.payment-form {
+  margin-top: 20px;
+}
+
+.payment-form select {
+  max-width: 260px;
+}
+
+.payment-form .button {
+  display: flex;
+  width: fit-content;
+}
+
+.form-hint {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* Admin rates and transaction table */
+.admin-section {
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--white);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.section-heading h2 {
+  margin: 0 0 4px;
+  font: 700 18px 'Manrope', sans-serif;
+}
+
+.section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.rates-form {
+  max-width: 550px;
+}
+
+.rate-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 11px 0;
+  border-top: 1px solid #edf0ed;
+  font-weight: 500;
+}
+
+.rate-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.rate-input input {
+  width: 100px;
+  min-height: 36px;
+}
+
+.rates-form .button {
+  margin-top: 15px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  padding: 11px 12px;
+  background: #f4f7f4;
+  color: #5f6e64;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 13px 12px;
+  border-bottom: 1px solid #edf0ed;
+}
+
+.plate-cell {
+  font-weight: 700;
+}
+
+.empty-state {
+  margin: 0;
+  padding: 24px 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Flash messages */
+.messages {
+  margin-bottom: 20px;
+}
+
+.message {
+  margin: 0 0 8px;
+  padding: 12px 15px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.message.success {
+  background: var(--green-pale);
+  color: var(--green-dark);
+}
+
+.message.error {
+  background: var(--red-pale);
+  color: #85372e;
+}
+
+/* A smaller two-column grid keeps the pages usable on phones. */
+@media (max-width: 700px) {
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  nav {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+
+  .page {
+    width: min(100% - 32px, 560px);
+    padding-top: 32px;
+  }
+
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .slot-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .slot {
+    min-height: 96px;
+    padding: 12px 15px;
+  }
+
+  .availability {
+    min-height: 90px;
+    padding: 16px;
+  }
+
+  .legend {
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .form-panel,
+  .admin-section {
+    padding: 19px;
+  }
+
+  .inline-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .fee-summary {
+    align-items: flex-start;
+  }
+
+  .fee-amount strong {
+    font-size: 19px;
+  }
+}

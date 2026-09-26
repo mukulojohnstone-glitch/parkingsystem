@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Live slots{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">PARKING OPERATIONS</p>
+    <h1>Live slot availability</h1>
+    <p class="subheading">A real-time view of all 20 parking bays.</p>
+  </div>
+  <a class="button primary" href="{{ url_for('entry') }}">Register vehicle</a>
+</section>
+
+<section class="availability" aria-label="Parking availability">
+  <div class="availability-count">
+    <span class="eyebrow">AVAILABLE NOW</span>
+    <strong id="available-count">{{ slots|selectattr('status', 'equalto', 'Free')|list|length }}</strong>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot free-dot"></i>Free</span>
+    <span><i class="dot occupied-dot"></i>Occupied</span>
+  </div>
+</section>
+
+<section class="slot-grid" id="slot-grid" data-slots-url="{{ url_for('slots_api') }}" aria-live="polite">
+  {% for slot in slots %}
+    <article class="slot {{ 'is-free' if slot.status == 'Free' else 'is-occupied' }}" data-slot="{{ slot.slot_number }}">
+      <span class="slot-label">BAY</span>
+      <strong>{{ '%02d'|format(slot.slot_number) }}</strong>
+      <span class="slot-status">{{ slot.status }}</span>
+    </article>
+  {% endfor %}
+</section>
+
+<p class="update-note">Availability refreshes automatically.</p>
+{% endblock %}

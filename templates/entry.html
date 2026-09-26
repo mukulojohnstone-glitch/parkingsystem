@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Vehicle entry{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">ARRIVAL</p>
+    <h1>Register a vehicle</h1>
+    <p class="subheading">The next available bay will be assigned automatically.</p>
+  </div>
+</section>
+
+<section class="form-panel">
+  <form method="post">
+    <label for="plate">Vehicle number plate</label>
+    <input
+      id="plate"
+      name="plate"
+      type="text"
+      placeholder="e.g. KDA 123A"
+      maxlength="20"
+      required
+      autofocus
+    >
+    <button class="button primary" type="submit">Record arrival</button>
+  </form>
+</section>
+{% endblock %}
